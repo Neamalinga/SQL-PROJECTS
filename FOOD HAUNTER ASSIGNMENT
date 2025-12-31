@@ -1,0 +1,29 @@
+use food;
+show tables;
+#show all the data in the resturants table
+select * from restaurants;
+#show only the dishes,their prices,and the calories in them from the food_items table
+select * from food_items limit 5;
+select item_name,price,calories from food_items;
+#retrieve the order ids,customer ids,andtotal prices of all orders
+select * from orders limit 5;
+select customer_id,order_id,total_price from orders;
+#count the number of restuarants in the resturauant table
+select* from restaurants limit 5;
+SELECT COUNT(DISTINCT restaurant_id)
+FROM restaurants;#100
+#find the unique no of cuisines served by the resturants
+SELECT COUNT(DISTINCT cuisine)
+FROM restaurants;   #4
+select distinct cuisine from restaurants;
+#find the number of unique dishes served by restaurants from the food_items table
+select * from food_items limit 5;
+select count(distinct item_name) from food_items;  #173
+
+
+
+
+
+
+
+
