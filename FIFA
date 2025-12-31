@@ -1,0 +1,86 @@
+use ds_sep_2025;
+select* from fifa_data limit 5;
+describe fifa_data;
+#to count hte no of palyers 
+select count(*) as total_players from fifa_data ;#16643
+#how many nationalities do these palyers belong to
+select count(distinct Nationality) from fifa_data;#161
+#what is the total wage given to all players?what is the avg and standrad deviation
+select sum(wage),
+avg(wage),
+stddev(wage) from fifa_data;#160073000 #9618.0376 #22262.85
+#which nationality has the highest numbers of players,what are the top 3 nationalities by no of palyers
+describe fifa_data;
+select Nationality,count(*) from fifa_data
+ group by nationality 
+ order by count(*) desc limit 3;
+-- which players has highest and lowest wage
+select name,id,wage from fifa_data
+where wage=(select max(wage) from fifa_data)
+union
+select id,name,wage from fifa_data
+where wage=(select min(wage) from fifa_data);
+
+
+-- players having the best and worst overall rating
+select ID,Name,overall from fifa_data 
+where overall  = (select max(overall) from fifa_data )
+union 
+select ID,Name,overall from fifa_data 
+where overall  = (select min(overall) from fifa_data )
+#Club having the highest total of overall rating? Highest Average of overall rating?;
+
+select club, SUM(overall) AS tot_overall
+FROM fifa_data
+GROUP BY club
+ORDER BY tot_overall DESC
+LIMIT 1;
+select club,avg(overall) as avg_overall
+from fifa_data
+group by club
+order by avg_overall
+limit 1;
+#What are the top 5 clubs based on the average 	ratings of their players and their corresponding 	averages?
+describe fifa_data;
+select* from fifa_data;
+select club,avg(overall) as avg_overall,avg(Potential) as avg_potential
+from fifa_data
+ group by club
+ order by avg_overall limit 5;
+# What is the distribution of players whose preferred foot is left vs right?
+describe fifa_data;
+select count(*),Preferred_Foot from fifa_data
+where Preferred_Foot='left'
+union
+select count(*),Preferred_Foot from fifa_data
+where Preferred_Foot='right';
+#which jersey number is luckiest
+-- --the jersey number worn by top rated players
+describe fifa_data;
+select name,id overall,Jersey_Number from fifa_data
+ order by overall desc limit 5;
+ #What is the frequency distribution of nationalities among players whose club name starts with M?
+ select nationality,club,count(*) as cnt from fifa_data
+ where club like "m%"
+ group by nationality
+ order by cnt;
+#--How many players have joined their respective clubs date wise?
+select * from fifa_data limit 5;
+select club,joined ,count(*) from fifa_data
+group by 1,2;
+
+-- ---How many players have joined their respective clubs yearly?
+SELECT YEAR(joined) AS join_year,club,
+       COUNT(*) AS players_joined
+FROM fifa_data
+GROUP BY YEAR(joined),clubss
+ORDER BY join_year,club;
+
+
+
+
+
+
+
+
+
